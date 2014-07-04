@@ -18,7 +18,6 @@ void giro_180(){
 }
 
 void giro_der90(){
-	
   setup_timer_2(T2_DIV_BY_1,1000,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
 	setup_ccp1(CCP_PWM);
   setup_ccp2(CCP_PWM);
