@@ -5,7 +5,7 @@
 float volta,volti,voltd,disa,disi,disd;
 long  adelante,izq,der;
 float decimal= 5/256; //asi con los comentarios//
-#include <math.h>
+#include <math.h> // eri terrible de pollo siiii //
 void giro_180(){
 	setup_timer_2(T2_DIV_BY_1,10000,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
 	setup_ccp1(CCP_PWM);
