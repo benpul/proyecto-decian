@@ -1,5 +1,3 @@
-Hola!!!!!
-Su FIFAAAA ahora que me deciiii1!!!!  yo creo que nuestro avance se merece su pees 2014
 #include <16F877A.h>
 #device adc=8
 #fuses XT, NOWDT, PUT, NOPROTECT, NODEBUG, NOBROWNOUT, NOLVP, NOCPD, NOWRT,
