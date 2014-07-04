@@ -4,7 +4,7 @@
 #use delay(clock=4000000)
 float volta,volti,voltd,disa,disi,disd;
 long  adelante,izq,der;
-float decimal= 5/256; 
+float decimal= 5/256; //asi con los comentarios//
 #include <math.h>
 void giro_180(){
 	setup_timer_2(T2_DIV_BY_1,10000,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
