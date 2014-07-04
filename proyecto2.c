@@ -1,11 +1,13 @@
+Hola!!!!!
+Su FIFAAAA ahora que me deciiii1!!!! 
 #include <16F877A.h>
 #device adc=8
 #fuses XT, NOWDT, PUT, NOPROTECT, NODEBUG, NOBROWNOUT, NOLVP, NOCPD, NOWRT,
 #use delay(clock=4000000)
 float volta,volti,voltd,disa,disi,disd;
 long  adelante,izq,der;
-float decimal= 5/256; //asi con los comentarios//
-#include <math.h> // eri terrible de pollo siiii //
+float decimal= 5/256;
+#include <math.h>
 void giro_180(){
 	setup_timer_2(T2_DIV_BY_1,10000,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
 	setup_ccp1(CCP_PWM);
