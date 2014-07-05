@@ -10,7 +10,8 @@ int sensorFrontal,sensorIzquierda,sensorDerecha;
 float resolucion= 5/255; 
 
 void giro_180(){
-  	setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+	//Modo, periodo y postscaler, para que funciones a 1 Hz
+  	setup_timer_2(T2_DIV_BY_1,249,1); 
 	setup_ccp1(CCP_PWM);
   	setup_ccp2(CCP_PWM);
   	set_pwm1_duty(70);
@@ -18,7 +19,8 @@ void giro_180(){
 }
 
 void giro_der90(){
-  	setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+	//Modo, periodo y postscaler, para que funciones a 1 Hz
+  	setup_timer_2(T2_DIV_BY_1,249,1); 
 	setup_ccp1(CCP_PWM);
   	setup_ccp2(CCP_PWM);
   	set_pwm1_duty(70);

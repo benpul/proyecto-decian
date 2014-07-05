@@ -6,8 +6,13 @@
 #include <math.h>
 
 float voltajeFrontal,voltajeIzquierda,voltajeDerecha,distanciaFrontal,distanciaIzquierda,distanciaDerecha;
+<<<<<<< HEAD
 int sensorFrontal,sensorIzquierda,sensorDerecha;
 float resolucion= 5/255; 
+=======
+int  sensorFrontal,sensorIzquierda,sensorDerecha;
+float const resolucion= 5/256; 
+>>>>>>> FETCH_HEAD
 
 
 
