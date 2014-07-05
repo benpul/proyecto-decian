@@ -6,8 +6,8 @@
 #include <math.h>
 
 float voltajeFrontal,voltajeIzquierda,voltajeDerecha,distanciaFrontal,distanciaIzquierda,distanciaDerecha;
-long  sensorFrontal,sensorIzquierda,sensorDerecha;
-float resolucion= 5/256; 
+int  sensorFrontal,sensorIzquierda,sensorDerecha;
+float const resolucion= 5/256; 
 
 
 
