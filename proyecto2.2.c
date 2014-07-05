@@ -6,8 +6,8 @@
 #include <math.h>
 
 float voltajeFrontal,voltajeIzquierda,voltajeDerecha,distanciaFrontal,distanciaIzquierda,distanciaDerecha;
-long  sensorFrontal,sensorIzquierda,sensorDerecha;
-float resolucion= 5/256; 
+int sensorFrontal,sensorIzquierda,sensorDerecha;
+float resolucion= 5/255; 
 
 
 
@@ -44,12 +44,14 @@ void main(){
 	setup_adc(ADC_CLOCK_DIV_4);
 	setup_adc_ports(3);
 	while(1){
-		setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+    //Modo, periodo y postscaler, para que funciones a 1 Hz
+		setup_timer_2(T2_DIV_BY_1,249,1);
 	  setup_ccp1(CCP_PWM);
     setup_ccp2(CCP_PWM);
 		set_pwm1_duty(70);
     set_pwm2_duty(70);;
-    set_adc_channel(AN0);
+    //Se hace la conversión de los tres sensores
+    set_adc_channel(0);
 		delay_ms(1);
 		sensorFrontal = read_adc();
 		voltajeFrontal = sensorFrontal * resolucion;
@@ -66,7 +68,7 @@ void main(){
       //Realiza el calculo de la distancia del sensor frontal
       distanciaFrontal=(((16.75*pow(voltajeFrontal,4.0))-119.26*pow(voltajeFrontal,3.0))+(311.7*pow(voltajeFrontal,2.0))-(365.71*voltajeFrontal)+184.03);
       //Si la distancia del sensor frontal es menor a 10 cm ingresa al IF
-      if (distanciaFrontal < 10.0){
+      while (distanciaFrontal < 10.0){
         //Si el voltaje izquierda esta entre 0,5 y 2,7, ingresa al IF
         if ((voltajeIzquierda > 0.5) && (voltajeIzquierda < 2.7)){
           //Realiza el calculo de la distancia del sensor izquierdo
@@ -74,12 +76,12 @@ void main(){
           //Si la distancia del sensor izquierdo es menor a 10 cm ingresa al IF
           if (distanciaIzquierda < 10.0){ 
             //Si el voltaje derecha esta entre 0,5 y 2,7, ingresa al IF
-            if ((voltajeDerecha > 0.5) && (voltajeDerecha < 2.7)){
+            while ((voltajeDerecha > 0.5) && (voltajeDerecha < 2.7)){
               //Realiza el calculo de la distancia del sensor derecho
               distanciaDerecha=(((16.75*pow(voltajeDerecha,4.0))-119.26*pow(voltajeDerecha,3.0))+(311.7*pow(voltajeDerecha,2.0))-(365.71*voltajeDerecha)+184.03);
             }
             //Si la distancia del sensor derecho es menor a 10 cm ingresa al IF
-            if (distanciaDerecha < 10.0){ 
+            while (distanciaDerecha < 10.0){ 
               giro_180();
             }
           }
@@ -96,14 +98,14 @@ void main(){
     else{ 
       if ((voltajeIzquierda > 0.5) && (voltajeIzquierda < 2.7)){
         distanciaIzquierda=(((16.75*pow(voltajeIzquierda,4.0))-119.26*pow(voltajeIzquierda,3.0))+(311.7*pow(voltajeIzquierda,2.0))-(365.71*voltajeIzquierda)+184.03);
-        if (distanciaIzquierda<10.0){
+        while (distanciaIzquierda<10.0){
           giro_der90();
         }
       }
       else{
         if ((voltajeDerecha >0.5) && (voltajeDerecha<2.7)){
           distanciaDerecha=(((16.75*pow(voltajeDerecha,4.0))-119.26*pow(voltajeDerecha,3.0))+(311.7*pow(voltajeDerecha,2.0))-(365.71*voltajeDerecha)+184.03);
-          if (distanciaDerecha<10.0){ 
+          while (distanciaDerecha<10.0){ 
             giro_izq90();
           }
         }
