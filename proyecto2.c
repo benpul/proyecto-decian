@@ -3,8 +3,8 @@
 #fuses XT, NOWDT, PUT, NOPROTECT, NODEBUG, NOBROWNOUT, NOLVP, NOCPD, NOWRT,
 #use delay(clock=4000000)
 float volta,volti,voltd,disa,disi,disd;
-long  adelante,izq,der;
-float decimal= 5/256;
+long  sensorFrontal,izq,der;
+float resolucion= 5/256;
 
 #include <math.h>
 
@@ -48,16 +48,16 @@ void main(){
     set_pwm2_duty(90);;
     set_adc_channel(AN0);
 		delay_ms(1);
-		adelante = read_adc();
-		volta = adelante* decimal;
+		sensorFrontal = read_adc();
+		volta = sensorFrontal* resolucion;
     set_adc_channel(1);
 	  delay_ms(1);
 		izq = read_adc();
-    volti = izq* decimal;
+    volti = izq* resolucion;
     set_adc_channel(2);
 		delay_ms(1);
 		der = read_adc();
-		voltd = der* decimal;
+		voltd = der* resolucion;
     if ((Volta >0.5) && (volta<2.7)){
       disa=(((16.75*pow(volta,4.0))-119.26*pow(volta,3.0))+(311.7*pow(volta,2.0))-(365.71*volta)+184.03);
       if (disa<10.0){
