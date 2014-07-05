@@ -2,128 +2,112 @@
 #device adc=8
 #fuses XT, NOWDT, PUT, NOPROTECT, NODEBUG, NOBROWNOUT, NOLVP, NOCPD, NOWRT,
 #use delay(clock=4000000)
+
 #include <math.h>
-float volta,volti,voltd,disa,disi,disd;
-int  adelante,izq,der;
+
+float voltajeFrontal,voltajeIzquierda,voltajeDerecha,distanciaFrontal,distanciaIzquierda,distanciaDerecha;
+long  sensorFrontal,sensorIzquierda,sensorDerecha;
+float resolucion= 5/256; 
+
+
 
 void giro_180(){
-  setup_timer_2(T2_DIV_BY_4,255,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
-  setup_ccp1(CCP_PWM);
-    setup_ccp2(CCP_PWM);
-    set_pwm1_duty(207);
-  set_pwm2_duty(80);
-  delay_ms(500);
+  setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+	setup_ccp1(CCP_PWM);
+  setup_ccp2(CCP_PWM);
+  set_pwm1_duty(70);
+	set_pwm2_duty(30);
+	delay_ms(500);
 }
 
 void giro_der90(){
-  
-    setup_timer_2(T2_DIV_BY_4,255,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
-  setup_ccp1(CCP_PWM);
-    setup_ccp2(CCP_PWM);
-    set_pwm1_duty(207);
-  set_pwm2_duty(80);
-  delay_ms(250);
+  setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+	setup_ccp1(CCP_PWM);
+  setup_ccp2(CCP_PWM);
+  set_pwm1_duty(70);
+	set_pwm2_duty(30);
+	delay_ms(250);
 }
 
 void giro_izq90(){
-  setup_timer_2(T2_DIV_BY_4,255,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
-  setup_ccp1(CCP_PWM);
-    setup_ccp2(CCP_PWM);
-    set_pwm1_duty(80);
-  set_pwm2_duty(207);
-  delay_ms(250);
+	setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+	setup_ccp1(CCP_PWM);
+  setup_ccp2(CCP_PWM);
+  set_pwm1_duty(30);
+	set_pwm2_duty(70);
+	delay_ms(250);
 }
-
-
 
 void main(){
-  set_tris_A(0x1F);
-  set_tris_C(0x00);
-     
-     setup_adc(ADC_CLOCK_DIV_4);
-     setup_adc_ports(3);
-    
-  
-  while(1){
-    setup_timer_2(T2_DIV_BY_16,255,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
-      setup_ccp1(CCP_PWM);
-      setup_ccp2(CCP_PWM);
-    set_pwm1_duty(207);
-      set_pwm2_duty(80);;
-        set_adc_channel(0);
-    delay_ms(15);
-    adelante = read_adc();
-    volta = adelante*5.0/256.0;
-        set_adc_channel(1);
-      delay_ms(15);
-    izq = read_adc();
-        volti = izq* 5.0/256.0;
-        set_adc_channel(2);
-    delay_ms(15);
-    der = read_adc();
-    voltd = der* 5.0/256.0;
-        if ((Volta >0.5) && (volta<2.7)){
-                disa=(((16.75*pow(volta,4.0))-119.26*pow(volta,3.0))+(311.7*pow(volta,2.0))-(365.71*volta)+184.03);
-                        if (disa<10.0){
-                                        
-                                if ((volti >0.5) && (volti<2.7)){
-                                            disi=(((16.75*pow(volti,4.0))-119.26*pow(volti,3.0))+(311.7*pow(volti,2.0))-(365.71*volti)+184.03);
-                                            if (disi<10.0){ 
-                                            if ((voltd >0.5) && (voltd<2.7)){
-                                            disd=(((16.75*pow(voltd,4.0))-119.26*pow(voltd,3.0))+(311.7*pow(voltd,2.0))-(365.71*voltd)+184.03);
-                                            }if (disd<10.0){ 
-                                                     set_pwm1_duty(207);
-                                                     set_pwm2_duty(80);
-                                                   delay_ms(500);
-                                                   giro_180();
-                                            }else {giro_der90();
-                                                       set_pwm1_duty(207);
-                                                     set_pwm2_duty(80);
-                                                     delay_ms(250);  }
-
-                                     }else{
-                                          giro_izq90();
-                                              set_pwm1_duty(80);
-                                            set_pwm2_duty(207);
-                                          delay_ms(250);  
-                                                        }
-                        }else{ set_pwm1_duty(80);
-                                            set_pwm2_duty(207);
-                                          delay_ms(250);
-
-                        } 
-       }
-                        
-           
-                
-       else{ 
-           if ((volti >0.5) && (volti<2.7)){
-                disi=(((16.75*pow(volti,4.0))-119.26*pow(volti,3.0))+(311.7*pow(volti,2.0))-(365.71*volti)+184.03);
-                if (disi<10.0){
-                     set_pwm1_duty(207);
-                   set_pwm2_duty(80);
-                   delay_ms(250); 
-
-                      giro_der90();
-                }
-              }
-              
-        else{
-              if ((voltd >0.5) && (voltd<2.7)){
-                       disd=(((16.75*pow(voltd,4.0))-119.26*pow(voltd,3.0))+(311.7*pow(voltd,2.0))-(365.71*voltd)+184.03);
-                       if (disd<10.0){ 
-                            set_pwm1_duty(80);
-                            set_pwm2_duty(207);
-                          delay_ms(250); 
-
-
-                              giro_izq90();
-                       }
-              }
-            }      
-        
- }  
-
-}
-}
+	set_tris_A(0x1F);
+	set_tris_C(0x00);
+	setup_adc(ADC_CLOCK_DIV_4);
+	setup_adc_ports(3);
+	while(1){
+		setup_timer_2(T2_DIV_BY_1,249,1); //Modo, periodo y postscaler, para que funciones a 1 Hz
+	  setup_ccp1(CCP_PWM);
+    setup_ccp2(CCP_PWM);
+		set_pwm1_duty(70);
+    set_pwm2_duty(70);;
+    set_adc_channel(AN0);
+		delay_ms(1);
+		sensorFrontal = read_adc();
+		voltajeFrontal = sensorFrontal * resolucion;
+    set_adc_channel(1);
+	  delay_ms(1);
+		sensorIzquierda = read_adc();
+    voltajeIzquierda = sensorIzquierda * resolucion;
+    set_adc_channel(2);
+		delay_ms(1);
+		sensorDerecha = read_adc();
+		voltajeDerecha = sensorDerecha * resolucion;
+    //Si el voltaje frontal esta entre 0,5 y 2,7, ingresa al IF
+    if ((voltajeFrontal > 0.5) && (voltajeFrontal < 2.7)){
+      //Realiza el calculo de la distancia del sensor frontal
+      distanciaFrontal=(((16.75*pow(voltajeFrontal,4.0))-119.26*pow(voltajeFrontal,3.0))+(311.7*pow(voltajeFrontal,2.0))-(365.71*voltajeFrontal)+184.03);
+      //Si la distancia del sensor frontal es menor a 10 cm ingresa al IF
+      if (distanciaFrontal < 10.0){
+        //Si el voltaje izquierda esta entre 0,5 y 2,7, ingresa al IF
+        if ((voltajeIzquierda > 0.5) && (voltajeIzquierda < 2.7)){
+          //Realiza el calculo de la distancia del sensor izquierdo
+          distanciaIzquierda=(((16.75*pow(voltajeIzquierda,4.0))-119.26*pow(voltajeIzquierda,3.0))+(311.7*pow(voltajeIzquierda,2.0))-(365.71*voltajeIzquierda)+184.03);
+          //Si la distancia del sensor izquierdo es menor a 10 cm ingresa al IF
+          if (distanciaIzquierda < 10.0){ 
+            //Si el voltaje derecha esta entre 0,5 y 2,7, ingresa al IF
+            if ((voltajeDerecha > 0.5) && (voltajeDerecha < 2.7)){
+              //Realiza el calculo de la distancia del sensor derecho
+              distanciaDerecha=(((16.75*pow(voltajeDerecha,4.0))-119.26*pow(voltajeDerecha,3.0))+(311.7*pow(voltajeDerecha,2.0))-(365.71*voltajeDerecha)+184.03);
+            }
+            //Si la distancia del sensor derecho es menor a 10 cm ingresa al IF
+            if (distanciaDerecha < 10.0){ 
+              giro_180();
+            }
+          }
+          else{
+            giro_der90();
+          } 
+        }
+        //Si la distancia del sensor frontal es mayor a 10 cm ingresa al IF
+        else{ 
+          giro_izq90();
+        }
+      }
+    }
+    else{ 
+      if ((voltajeIzquierda > 0.5) && (voltajeIzquierda < 2.7)){
+        distanciaIzquierda=(((16.75*pow(voltajeIzquierda,4.0))-119.26*pow(voltajeIzquierda,3.0))+(311.7*pow(voltajeIzquierda,2.0))-(365.71*voltajeIzquierda)+184.03);
+        if (distanciaIzquierda<10.0){
+          giro_der90();
+        }
+      }
+      else{
+        if ((voltajeDerecha >0.5) && (voltajeDerecha<2.7)){
+          distanciaDerecha=(((16.75*pow(voltajeDerecha,4.0))-119.26*pow(voltajeDerecha,3.0))+(311.7*pow(voltajeDerecha,2.0))-(365.71*voltajeDerecha)+184.03);
+          if (distanciaDerecha<10.0){ 
+            giro_izq90();
+          }
+        }
+      }      
+    }
+  }  
 }
